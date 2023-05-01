@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Play Hostage</title>
+</head>
+<body>
+  <h1>Play Hostage</h1>
+  <button onclick="playNote1()">Note 1</button>
+  <button onclick="playNote2()">Note 2</button>
+  <button onclick="playNote3()">Note 3</button>
+  <button onclick="playNote4()">Note 4</button>
+  <button onclick="playNote5()">Note 5</button>
+  <button onclick="playNote6()">Note 6</button>
+  <button onclick="playNote7()">Note 7</button>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/15.1.14/Tone.js"></script>
+  <script>
+    const synth = new Tone.Synth().toDestination();
+    
+    function playNote1() {
+      synth.triggerAttackRelease("C4", "8n");
+    }
+    
+    function playNote2() {
+      synth.triggerAttackRelease("D4", "8n");
+    }
+    
+    function playNote3() {
+      synth.triggerAttackRelease("E4", "8n");
+    }
+    
+    function playNote4() {
+      synth.triggerAttackRelease("F4", "8n");
+    }
+    
+    function playNote5() {
+      synth.triggerAttackRelease("G4", "8n");
+    }
+    
+    function playNote6() {
+      synth.triggerAttackRelease("A4", "8n");
+    }
+    
+    function playNote7() {
+      synth.triggerAttackRelease("B4", "8n");
+    }
+  </script>
+</body>
+</html>
