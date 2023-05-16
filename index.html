@@ -5,161 +5,190 @@ with his tutorial and add my own spin-->
 
 <!-- the following HTML & CSS is guided by Jake's tutorial-- 
 the "types", "alt", "name", and "label" details was pretty new to me -->
-<header>
-  <input id="chord-1" value="1" type="radio" name="chord" />
-  <input id="chord-2" value="2" type="radio" name="chord" />
-  <input id="chord-3" value="3" type="radio" name="chord" />
-  <input id="chord-4" value="4" type="radio" name="chord" />
-  <input id="chord-5" value="5" type="radio" name="chord" />
-  <ul>
-    <li><label for="chord-1"><img src="ghost.jpg" alt="Chord 1"></label></li>
-    <li><label for="chord-2"><img src="bulb.jpg" alt="Chord 2"></label></li>
-    <li><label for="chord-3"><img src="skelly.jpg" alt="Chord 3"></label></li>
-    <li><label for="chord-4"><img src="dino.jpg" alt="Chord 4"></label></li>
-    <li><label for="chord-5"><img src="lava.jpg" alt="Chord 5"></label></li>
-  </ul>
-  <button id="stop-button">PAUSE</button>
-</header>
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      html,
+      body {
+        height: 100%;
+        background: black;
+        margin: 0;
+        padding: 0;
+      }
 
-<style>
-  html,
-  body {
-    height: 100%;
-    background: black;
-  }
+      header {
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+      }
 
-  header {
-    position: relative;
-    overflow: hidden;
-    height: 100%;
-  }
+      h1 {
+        font-family: 'Press Start 2P', cursive;
+        font-size: 60px;
+        letter-spacing: 4.5px;
+        text-align: center;
+        color: white;
+      }
 
-  ul {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+      ul {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-  li {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: black;
-    margin: 0 10px;
-    transition: transform 0.5s;
-  }
+      li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: black;
+        margin: 0 10px;
+        transition: transform 0.5s;
+      }
 
-  input {
-    position: absolute;
-    left: -9999px;
-  }
+      input {
+        position: absolute;
+        left: -9999px;
+      }
 
-  img {
-    width: 90px;
-    height: 90px;
-    pointer-events: none;
-  }
+      img {
+        width: 90px;
+        height: 90px;
+        pointer-events: none;
+      }
 
-  @for $i from 1 through 5 {
-    &#chord-#{$i}:checked~ul li:nth-child(#{$i}) {
-      transform: rotate(calc((#{$i} - 1) * 72deg)) translate(-50%, -50%) translateY(-150px) rotate(calc((1 - #{$i}) * 72deg));
-    }
-  }
-</style>
+      @for $i from 1 through 5 {
+        &#chord-#{$i}:checked~ul li:nth-child(#{$i}) {
+          transform: rotate(calc((#{$i} - 1) * 72deg)) translate(-50%, -50%) translateY(-150px) rotate(calc((1 - #{$i}) * 72deg));
+        }
+      }
 
-<script src="https://tonejs.github.io/build/Tone.js"></script>
+      #stop-button {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: 'Press Start 2P', cursive;
+        font-size: 16px;
+        padding: 10px 20px;
+        background: black;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+  </head>
+  <body>
+    <header>
+      <input id="chord-1" value="1" type="radio" name="chord" />
+      <input id="chord-2" value="2" type="radio" name="chord" />
+      <input id="chord-3" value="3" type="radio" name="chord" />
+      <input id="chord-4" value="4" type="radio" name="chord" />
+      <input id="chord-5" value="5" type="radio" name="chord" />
+      <ul>
+        <li><label for="chord-1"><img src="ghost.jpg" alt="Chord 1"></label></li>
+        <li><label for="chord-2"><img src="bulb.jpg" alt="Chord 2"></label></li>
+        <li><label for="chord-3"><img src="skelly.jpg" alt="Chord 3"></label></li>
+        <li><label for="chord-4"><img src="dino.jpg" alt="Chord 4"></label></li>
+        <li><label for="chord-5"><img src="lava.jpg" alt="Chord 5"></label></li>
+      </ul>
+      <h1>Monster Music
+      </h1>
+      <button id="stop-button">PAUSE</button>
+    </header>
 
-<script>
-const stopButton = document.getElementById('stop-button');
 
-stopButton.addEventListener('click', () => {
-  Tone.Transport.stop();
-});
-</script>
+    <script src="https://tonejs.github.io/build/Tone.js"></script>
 
-<script>
+    <script>
+      const stopButton = document.getElementById('stop-button');
 
-const buttons = document.querySelectorAll('input');
+      stopButton.addEventListener('click', () => {
+        Tone.Transport.stop();
+      });
+    </script>
 
-// Define the colors corresponding to each chord
-const colors = [
-  '#00989e', // Chord 1 color
-  '#891467', // Chord 2 color
-  '#fcbdbd', // Chord 3 color
-  '#141c34', // Chord 4 color
-  '#e9a56d' // Chord 5 color
-];
+    <script>
+      const buttons = document.querySelectorAll('input');
 
-buttons.forEach((button, index) => {
-  button.addEventListener('click', () => {
-    const color = colors[index];
-    if (color) {
-      document.body.style.background = color;
-    }
-  });
-});
+      // Define the colors corresponding to each chord
+      const colors = [
+        '#00989e', // Chord 1 color
+        '#891467', // Chord 2 color
+        '#fcbdbd', // Chord 3 color
+        '#141c34', // Chord 4 color
+        '#e9a56d' // Chord 5 color
+      ];
 
+      buttons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+          const color = colors[index];
+          if (color) {
+            document.body.style.background = color;
+          }
+        });
+      });
+    </script>
 
-</script>
+    <script>
+      console.clear();
 
-<script>
-  console.clear();
+      let started = false;
+      document.documentElement.addEventListener('mousedown', () => {
+        if (started) return;
+        started = true;
 
-  let started = false;
-  document.documentElement.addEventListener('mousedown', () => {
-    if (started) return;
-    started = true;
+        //the following arpeggio code are some valuable, new stuff from jake's tutorial 
+        //-- i modified the notes i wanted to fit my little monsters
+        const $inputs = document.querySelectorAll('input'),
+          chords = [
+            'D#4 F#4 A#4', 'D4 F#4 A4', 'D#3 G#3 C4',
+            'D2, F2, C2', 'C4 E4 G4'
+          ].map(formatChords);
+        console.log(chords);
+        let chordIdx = 0,
+          step = 0;
 
-    //the following arpeggio code are some valuable, new stuff from jake's tutorial 
-    //-- i modified the notes i wanted to fit my little monsters
-    const $inputs = document.querySelectorAll('input'),
-      chords = [
-        'D#4 F#4 A#4', 'D4 F#4 A4', 'D#3 G#3 C4',
-        'D2, F2, C2', 'C4 E4 G4'
-      ].map(formatChords);
-    console.log(chords);
-    let chordIdx = 0,
-      step = 0;
+        const synth = new Tone.Synth();
+        const gain = new Tone.Gain(0.7);
+        synth.oscillator.type = 'sine';
+        gain.toMaster();
+        synth.connect(gain);
 
-    const synth = new Tone.Synth();
-    const gain = new Tone.Gain(0.7);
-    synth.oscillator.type = 'sine';
-    gain.toMaster();
-    synth.connect(gain);
+        Array.from($inputs).forEach($input => {
+          $input.addEventListener('change', () => {
+            if ($input.checked) handleChord($input.value);
+          })
+        });
 
-    Array.from($inputs).forEach($input => {
-      $input.addEventListener('change', () => {
-        if ($input.checked) handleChord($input.value);
-      })
-    });
+        function handleChord(valueString) {
+          chordIdx = parseInt(valueString) - 1;
+        }
 
-    function handleChord(valueString) {
-      chordIdx = parseInt(valueString) - 1;
-    }
+        Tone.Transport.scheduleRepeat(onRepeat, '16n');
+        Tone.Transport.start();
+        Tone.Transport.bpm.value = 90;
 
-    Tone.Transport.scheduleRepeat(onRepeat, '16n');
-    Tone.Transport.start();
-    Tone.Transport.bpm.value = 90;
+        function onRepeat(time) {
+          let chord = chords[chordIdx],
+            note = chord[step % chord.length];
+          synth.triggerAttackRelease(note, '16n', time);
+          step++;
+        }
 
-    function onRepeat(time) {
-      let chord = chords[chordIdx],
-        note = chord[step % chord.length];
-      synth.triggerAttackRelease(note, '16n', time);
-      step++;
-    }
-
-    function formatChords(chordString) {
-      return chordString.split(' ');
-    }
-  });
-</script>
+        function formatChords(chordString) {
+          return chordString.split(' ');
+        }
+      });
+    </script>
