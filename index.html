@@ -13,6 +13,7 @@
     <li><label for="chord-4"><img src="dino.jpg" alt="Chord 4"></label></li>
     <li><label for="chord-5"><img src="lava.jpg" alt="Chord 5"></label></li>
   </ul>
+  <button id="stop-button">PAUSE</button>
 </header>
 
 <style>
@@ -74,16 +75,23 @@
 <script src="https://tonejs.github.io/build/Tone.js"></script>
 
 <script>
+const stopButton = document.getElementById('stop-button');
+
+stopButton.addEventListener('click', () => {
+  Tone.Transport.stop();
+});
+</script>
+
+<script>
 
 const buttons = document.querySelectorAll('input');
 
 // Define the colors corresponding to each chord
 const colors = [
-  null, // Index 0 is not used
-  '#fcbdbd', // Chord 1 color
+  '#00989e', // Chord 1 color
   '#891467', // Chord 2 color
-  '#141c34', // Chord 3 color
-  '#00989e', // Chord 4 color
+  '#fcbdbd', // Chord 3 color
+  '#141c34', // Chord 4 color
   '#e9a56d' // Chord 5 color
 ];
 
