@@ -17,6 +17,7 @@
   html,
   body {
     height: 100%;
+    background: black;
   }
 
   header {
@@ -56,13 +57,12 @@
           flex-direction: column;
           justify-content: center;
           align-content: center;
-          font-size: 4rem; /* Increase the font size */
+          font-size: 3rem;
         }
-
+        
         img {
-          width: 120px; /* Increase the width */
-          height: 120px; /* Increase the height */
-          border-radius: 50%; /* Make the images circular */
+          width: 100px;
+          height: 100px;
         }
 
         +li {
@@ -74,6 +74,24 @@
 </style>
 
 <script src="https://tonejs.github.io/build/Tone.js"></script>
+
+<script>
+  const buttons = document.querySelectorAll('li');
+  const numButtons = buttons.length;
+  const radius = 300;
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
+
+  buttons.forEach((button, index) => {
+    const angle = (index / numButtons) * 2 * Math.PI;
+    const x = centerX + radius * Math.cos(angle) - button.offsetWidth / 2;
+    const y = centerY + radius * Math.sin(angle) - button.offsetHeight / 2;
+    button.style.left = `${x}px`;
+    button.style.top = `${y}px`;
+  });
+</script>
+
+
 <script>
   console.clear();
 
