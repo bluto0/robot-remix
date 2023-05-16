@@ -1,49 +1,121 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Play Hostage</title>
-</head>
-<body>
-  <h1>Play Hostage</h1>
-  <button onclick="playNote1()">Note 1</button>
-  <button onclick="playNote2()">Note 2</button>
-  <button onclick="playNote3()">Note 3</button>
-  <button onclick="playNote4()">Note 4</button>
-  <button onclick="playNote5()">Note 5</button>
-  <button onclick="playNote6()">Note 6</button>
-  <button onclick="playNote7()">Note 7</button>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/15.1.14/Tone.js"></script>
-  <script>
-    const synth = new Tone.Synth().toDestination();
-    
-    function playNote1() {
-      synth.triggerAttackRelease("C4", "8n");
+<header>
+  <input id="chord-1" value="1" type="radio" name="chord" />
+  <input id="chord-2" value="2" type="radio" name="chord" />
+  <input id="chord-3" value="3" type="radio" name="chord" />
+  <input id="chord-4" value="4" type="radio" name="chord" />
+  <input id="chord-5" value="5" type="radio" name="chord" />
+  <ul>
+    <li><label for="chord-1">1</label></li>
+    <li><label for="chord-2">2</label></li>
+    <li><label for="chord-3">3</label></li>
+    <li><label for="chord-4">4</label></li>
+    <li><label for="chord-5">5</label></li>
+  </ul>
+</header>
+
+<style>
+  html,
+  body {
+    height: 100%;
+  }
+
+  header {
+    overflow: hidden;
+    height: 100%;
+
+    input {
+      position: absolute;
+      left: -9999px;
+
+      @for $i from 1 through 5 {
+        &#chord-#{$i}:checked~ul label[for="chord-#{$i}"] {
+          background: tomato;
+        }
+      }
     }
-    
-    function playNote2() {
-      synth.triggerAttackRelease("D4", "8n");
+
+    ul {
+      height: 100%;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+
+      li {
+        flex: 1;
+
+        label {
+          height: 100%;
+          display: block;
+          cursor: pointer;
+          text-align: center;
+          padding: 0.5rem;
+          background: black;
+          color: white;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-content: center;
+          font-size: 3rem;
+        }
+
+        +li {
+          border-left: 4px solid #191919;
+        }
+      }
     }
-    
-    function playNote3() {
-      synth.triggerAttackRelease("E4", "8n");
+  }
+</style>
+
+<script src="https://tonejs.github.io/build/Tone.js"></script>
+<script>
+  console.clear();
+
+  // UPDATE: there is a problem in chrome with starting audio context
+  //  before a user gesture. This fixes it.
+  var started = false;
+  document.documentElement.addEventListener('mousedown', () => {
+    if (started) return;
+    started = true;
+
+    const $inputs = document.querySelectorAll('input'),
+      chords = [
+        'A4 C#5 E6', 'F1 A2 C3', 'G3 B3 D3',
+        'D2 F2 A2', 'E2 G2 B2'
+      ].map(formatChords);
+    console.log(chords);
+    var chordIdx = 0,
+      step = 0;
+
+    const synth = new Tone.Synth();
+    const gain = new Tone.Gain(0.7);
+    synth.oscillator.type = 'sine';
+    gain.toMaster();
+    synth.connect(gain);
+
+    Array.from($inputs).forEach($input => {
+      $input.addEventListener('change', () => {
+        if ($input.checked) handleChord($input.value);
+      })
+    });
+
+    function handleChord(valueString) {
+      chordIdx = parseInt(valueString) - 1;
     }
-    
-    function playNote4() {
-      synth.triggerAttackRelease("F4", "8n");
+
+    Tone.Transport.scheduleRepeat(onRepeat, '16n');
+    Tone.Transport.start();
+    Tone.Transport.bpm.value = 90;
+
+    function onRepeat(time) {
+      let chord = chords[chordIdx],
+        note = chord[step % chord.length];
+      synth.triggerAttackRelease(note, '16n', time);
+      step++;
     }
-    
-    function playNote5() {
-      synth.triggerAttackRelease("G4", "8n");
+
+    function formatChords(chordString) {
+      return chordString.split(' ');
     }
-    
-    function playNote6() {
-      synth.triggerAttackRelease("A4", "8n");
-    }
-    
-    function playNote7() {
-      synth.triggerAttackRelease("B4", "8n");
-    }
-  </script>
-</body>
-</html>
+  });
+</script>
