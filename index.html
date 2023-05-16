@@ -1,5 +1,10 @@
-<!-- I was lost as to how I should direct my attention for my second project. i scrapped many dif ideas before remembering jake's stuff and exploring his Youtube. I decided to learn a bit more about HTML/CSS and more about how to code an arpeggio with his tutorial and add my own spin-->
-<!-- the following HTML & CSS is guided by Jake's tutorial-- the "types", "alt", "name", and "label" details was pretty new to me -->
+<!-- I was lost as to how I should direct my attention for my second project. 
+i scrapped many dif ideas before remembering jake's stuff and exploring his Youtube. 
+I decided to learn a bit more about HTML/CSS and more about how to code an arpeggio 
+with his tutorial and add my own spin-->
+
+<!-- the following HTML & CSS is guided by Jake's tutorial-- 
+the "types", "alt", "name", and "label" details was pretty new to me -->
 <header>
   <input id="chord-1" value="1" type="radio" name="chord" />
   <input id="chord-2" value="2" type="radio" name="chord" />
@@ -110,13 +115,13 @@ buttons.forEach((button, index) => {
 <script>
   console.clear();
 
-  // UPDATE: there is a problem in chrome with starting audio context
-  //  before a user gesture. This fixes it.
   let started = false;
   document.documentElement.addEventListener('mousedown', () => {
     if (started) return;
     started = true;
 
+    //the following arpeggio code are some valuable, new stuff from jake's tutorial 
+    //-- i modified the notes i wanted to fit my little monsters
     const $inputs = document.querySelectorAll('input'),
       chords = [
         'D#4 F#4 A#4', 'D4 F#4 A4', 'D#3 G#3 C4',
